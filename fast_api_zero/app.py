@@ -1,19 +1,24 @@
+from http import HTTPStatus
+
 from fastapi import FastAPI
 from fastapi.responses import HTMLResponse
+
+from .schemas import Message
 
 app = FastAPI()
 
 
-@app.get("/")
+@app.get("/", response_model=Message, status_code=HTTPStatus.OK)
 def read_root() -> dict:
-    return {"Message": "Olá Mundo!"}
+    return {"message": "Olá Mundo!"}
+
 
 @app.get("/path-html")
 def read_html() -> HTMLResponse:
     html_content = """
     <html>
         <head>
-            <title>MarquesIgor!</title>
+            <title>MarquesIgor</title>
         </head>
         <body style="background-color:#1c1c1c;">
             <h1 style="color:red; text-align:center; margin-top:20rem">
