@@ -20,3 +20,6 @@
 #### JWT.IO - Verificação de tokens emitidos e validade
 [jwt.io](https://jwt.io/)
 
+#### FastAPI Routers e seus parametros
+[APIRouter](https://fastapi.tiangolo.com/reference/apirouter/)
+
