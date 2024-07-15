@@ -1,3 +1,4 @@
+import factory
 import pytest
 from fastapi.testclient import TestClient
 from sqlalchemy import create_engine
@@ -37,21 +38,41 @@ def session():
     table_registry.metadata.drop_all(engine)
 
 
+class UserFactory(factory.Factory):
+    class Meta:
+        model = User
+
+    username = factory.Sequence(lambda n: f'test{n}')
+    email = factory.LazyAttribute(lambda obj: f'{obj.username}@test.com')
+    password = factory.LazyAttribute(lambda obj: f'{obj.username}@example.com')
+
+
+
 @pytest.fixture()
 def user(session):
     pwd = "12345"
 
-    user = User(
-        username="username_teste",
-        email="teste@example.com",
-        password=get_password_hash(pwd),
-    )
+    user = UserFactory(password=get_password_hash(pwd))
 
     session.add(user)
     session.commit()
     session.refresh(user)
 
     user.clean_password = pwd  # Monkey Patch
+
+    return user
+
+
+@pytest.fixture
+def other_user(session):
+    pwd = 'test12345'
+    user = UserFactory(password=get_password_hash(pwd))
+
+    session.add(user)
+    session.commit()
+    session.refresh(user)
+
+    user.clean_password = 'test12345'
 
     return user
 
@@ -63,3 +84,5 @@ def token(client, user):
         data={"username": user.email, "password": user.clean_password},
     )
     return response.json()["access_token"]
+
+
