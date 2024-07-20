@@ -1,6 +1,5 @@
 from datetime import datetime, timedelta
 from http import HTTPStatus
-from zoneinfo import ZoneInfo
 
 from fastapi import Depends, HTTPException
 from fastapi.security import OAuth2PasswordBearer
@@ -9,6 +8,7 @@ from jwt.exceptions import PyJWTError
 from pwdlib import PasswordHash
 from sqlalchemy import select
 from sqlalchemy.orm import Session
+from zoneinfo import ZoneInfo
 
 from fast_api_zero.database import get_session
 from fast_api_zero.models import User
@@ -50,8 +50,9 @@ def get_current_user(
     )
 
     try:
-        payload = decode(token, settings.SECRET_KEY,
-                         algorithms=[settings.ALGORITHM])
+        payload = decode(
+            token, settings.SECRET_KEY, algorithms=[settings.ALGORITHM]
+        )
         username: str = payload.get("sub")
 
         if not username:
