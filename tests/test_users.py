@@ -22,9 +22,7 @@ def test_create_user(client):
 
 
 def test_read_users(client, token, user):
-    response = client.get(
-        "/users/"
-    )
+    response = client.get("/users/")
 
     assert response.status_code == HTTPStatus.OK
     assert response.json() == {
@@ -89,8 +87,8 @@ def test_update_user(client, user, token):
 
 def test_update_user_with_wrong_user(client, other_user, token):
     response = client.put(
-        f'/users/{other_user.id}',
-        headers={'Authorization': f'Bearer {token}'},
+        f"/users/{other_user.id}",
+        headers={"Authorization": f"Bearer {token}"},
         json={
             "username": "Marques_Igor_Updated",
             "email": "Email_Updated@example.com",
@@ -98,7 +96,7 @@ def test_update_user_with_wrong_user(client, other_user, token):
         },
     )
     assert response.status_code == HTTPStatus.FORBIDDEN
-    assert response.json() == {'detail': 'Not enough permissions'}
+    assert response.json() == {"detail": "Not enough permissions"}
 
 
 def test_delete_user(client, user, token):
@@ -112,8 +110,8 @@ def test_delete_user(client, user, token):
 
 def test_delete_user_wrong_user(client, other_user, token):
     response = client.delete(
-        f'/users/{other_user.id}',
-        headers={'Authorization': f'Bearer {token}'},
+        f"/users/{other_user.id}",
+        headers={"Authorization": f"Bearer {token}"},
     )
     assert response.status_code == HTTPStatus.FORBIDDEN
-    assert response.json() == {'detail': 'Not enough permissions'}
+    assert response.json() == {"detail": "Not enough permissions"}
