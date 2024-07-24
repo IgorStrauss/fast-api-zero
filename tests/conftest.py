@@ -24,18 +24,17 @@ def client(session):
 
 
 # Fixture criada para os testes com containertest postgres
-@pytest.fixture(scope='session')
+@pytest.fixture(scope="session")
 def engine():
-    with PostgresContainer('postgres:16', driver='psycopg') as postgres:
-
+    with PostgresContainer("postgres:16", driver="psycopg") as postgres:
         _engine = create_engine(postgres.get_connection_url())
 
         with _engine.begin():
-
             yield _engine
 
+
 # Fixture recebe a engine da função anterior, com base nos testes postgres
-@pytest.fixture
+@pytest.fixture()
 def session(engine):
     table_registry.metadata.create_all(engine)
 
