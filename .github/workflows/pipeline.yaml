@@ -19,11 +19,11 @@ jobs:
         with:
           python-version: '3.12'
 
-      - name: Instalar poetry
-        uses: pipx install poetry
-
       - name: Copiar os arquivos para o diretorio
         uses: actions/checkout@v3
+
+      - name: Instalar poetry
+        run: pipx install poetry
 
       - name: Instalar dependências
         run: poetry install
