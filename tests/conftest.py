@@ -45,21 +45,6 @@ def session(engine):
     table_registry.metadata.drop_all(engine)
 
 
-# @pytest.fixture()
-# def session():
-#     engine = create_engine(
-#         "sqlite:///:memory:",
-#         connect_args={"check_same_thread": False},
-#         poolclass=StaticPool,
-#     )
-#     table_registry.metadata.create_all(engine)
-
-#     with Session(engine) as session:
-#         yield session
-
-#     table_registry.metadata.drop_all(engine)
-
-
 class UserFactory(factory.Factory):
     class Meta:
         model = User
