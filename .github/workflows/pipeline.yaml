@@ -10,6 +10,12 @@ jobs:
         with:
           python-version: '3.12'
 
+      - name: Copiar os arquivos para o diretorio
+        uses: actions/checkout@v3
+
+      - name: Instalar poetry
+        uses: pipx install poetry
+
     env:
       DATABASE_URL: ${{ secrets.DATABASE_URL }}
       SECRET_KEY: ${{ secrets.SECRET_KEY }}
