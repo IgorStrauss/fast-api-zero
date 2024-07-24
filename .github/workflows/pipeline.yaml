@@ -3,7 +3,16 @@ on: [push, pull_request]
 
 jobs:
   test:
+
     runs-on: ubuntu-latest
+
+    env:
+      DATABASE_URL: ${{ secrets.DATABASE_URL }}
+      SECRET_KEY: ${{ secrets.SECRET_KEY }}
+      ALGORITHM: ${{ secrets.ALGORITHM }}
+      ACCESS_TOKEN_EXPIRE_MINUTES: ${{ secrets.ACCESS_TOKEN_EXPIRE_MINUTES }}
+
+
     steps:
       - name: Instalar Python
         uses: actions/setup-python@v5
@@ -15,12 +24,7 @@ jobs:
 
       - name: Copiar os arquivos para o diretorio
         uses: actions/checkout@v3
-        
+
       - name: Instalar dependências
         run: poetry install
 
-    env:
-      DATABASE_URL: ${{ secrets.DATABASE_URL }}
-      SECRET_KEY: ${{ secrets.SECRET_KEY }}
-      ALGORITHM: ${{ secrets.ALGORITHM }}
-      ACCESS_TOKEN_EXPIRE_MINUTES: ${{ secrets.ACCESS_TOKEN_EXPIRE_MINUTES }}
