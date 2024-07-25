@@ -30,3 +30,4 @@ jobs:
 
       - name: Executar testes
         run: poetry run pytest -v
+
