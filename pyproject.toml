@@ -16,6 +16,8 @@ pwdlib = {extras = ["argon2"], version = "^0.2.0"}
 python-multipart = "^0.0.9"
 pyjwt = "^2.8.0"
 psycopg = {extras = ["binary"], version = "^3.2.1"}
+beautifulsoup4 = "^4.12.3"
+
 
 
 [tool.poetry.group.dev.dependencies]
